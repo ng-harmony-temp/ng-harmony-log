@@ -123,6 +123,6 @@ export class NotImplementedError extends GenericError {
 ```
 
 ## CHANGELOG
-
+*v0.1.3* NotImplementedError
 *v0.1.2* Basic Error classes
 *v0.1.0* Basic Log class with log method only, Logging decorator
