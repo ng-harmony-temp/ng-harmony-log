@@ -68,11 +68,11 @@ export class Log {
 The decorator
 
 ```javascript
-    export function Logging() {
-		return function decorator(target) {
-			target.mixin(Log);
-		}
+export function Logging() {
+	return function decorator(target) {
+		target.mixin(Log);
 	}
+}
 ```
 
 ## CHANGELOG
