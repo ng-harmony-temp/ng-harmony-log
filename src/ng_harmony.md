@@ -64,17 +64,6 @@ export class Log {
     }
 }
 ```
-
-The decorator
-
-```javascript
-export function Logging() {
-	return function decorator(target) {
-		target.mixin(Log);
-	}
-}
-```
-
 Error Classes
 
 ```javascript
@@ -126,6 +115,7 @@ export class NotImplementedError extends GenericError {
 ```
 
 ## CHANGELOG
+*v0.1.5* Migrating the `Logging-Decorator` to `ng-harmony-decorate`
 *v0.1.4* Due to setting the method dynamically `(Object.defineProperty)` elsewhere, it is possible to add the methodSignature
 *v0.1.3* NotImplementedError
 *v0.1.2* Basic Error classes

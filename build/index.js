@@ -15,12 +15,6 @@ export class Log {
     }
 }
 
-export function Logging() {
-	return function decorator(target) {
-		target.mixin(Log);
-	}
-}
-
 export class GenericError extends Error {
     name = this.constructor.name;
     level = "info";

@@ -15,12 +15,6 @@ export let Log = class Log {
     }
 };
 
-export function Logging() {
-    return function decorator(target) {
-        target.mixin(Log);
-    };
-}
-
 export let GenericError = class GenericError extends Error {
     constructor(...args) {
         var _temp;
