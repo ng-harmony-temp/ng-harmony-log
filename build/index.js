@@ -59,3 +59,7 @@ export class DataReqeustTimeoutError extends DataRequestError {
 export class DataRequestVoidError extends DataRequestError {
     message = "The Request returned an unexpected empty response";
 }
+
+export class NotImplementedError extends GenericError {
+    message = "The method is to mandatory by design, but isn't implemented";
+}
