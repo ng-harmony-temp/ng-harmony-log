@@ -119,10 +119,14 @@ export class DataRequestVoidError extends DataRequestError {
 
 export class NotImplementedError extends GenericError {
     message = "The method is to mandatory by design, but isn't implemented";
+    constructor (methodSignature) {
+        this.message = methodSignature + ": " + this.message;
+    }
 }
 ```
 
 ## CHANGELOG
+*v0.1.4* Due to setting the method dynamically `(Object.defineProperty)` elsewhere, it is possible to add the methodSignature
 *v0.1.3* NotImplementedError
 *v0.1.2* Basic Error classes
 *v0.1.0* Basic Log class with log method only, Logging decorator

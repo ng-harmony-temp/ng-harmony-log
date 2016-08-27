@@ -103,12 +103,9 @@ export let DataRequestVoidError = class DataRequestVoidError extends DataRequest
 };
 
 export let NotImplementedError = class NotImplementedError extends GenericError {
-    constructor(...args) {
-        var _temp10;
-
-        return _temp10 = super(...args), this.message = "The method is to mandatory by design, but isn't implemented", _temp10;
+    constructor(methodSignature) {
+        this.message = methodSignature + ": " + this.message;
     }
-
 };
 
 //# sourceMappingURL=common_module.js.map
