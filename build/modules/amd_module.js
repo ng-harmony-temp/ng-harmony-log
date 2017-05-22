@@ -1,20 +1,21 @@
 import "js-logger";
 
+var Accessor = this;
+
 export let Log = class Log {
     log(o) {
         if (typeof this._name === "undefined" || this._name === null) {
             this._name = this.constructor.name + "::" + (Math.random() / new Date().getTime()).toString(36).slice(-7);
         }
         let level = o.level || "info",
-            logger = Logger.get(this._name),
+            logger = Accessor.Logger.get(this._name),
             severe = o.level === "warn" || o.level === "error";
         logger["info"](o.name);
-        o instanceof Error && logger["info"](`F: ${ o.fileName }, L: ${ o.lineNumber }, C: ${ o.columnNumber }`);
+        o instanceof Error && logger["info"](`F: ${o.fileName}, L: ${o.lineNumber}, C: ${o.columnNumber}`);
         logger[level](o.message);
         o instanceof Error && severe && logger[level](o.stack);
     }
 };
-
 export let GenericError = class GenericError extends Error {
     constructor(...args) {
         var _temp;
@@ -98,6 +99,8 @@ export let DataRequestVoidError = class DataRequestVoidError extends DataRequest
 
 export let NotImplementedError = class NotImplementedError extends GenericError {
     constructor(methodSignature) {
+        super();
+        this.message = "The method is to mandatory by design, but isn't implemented";
         this.message = methodSignature + ": " + this.message;
     }
 };

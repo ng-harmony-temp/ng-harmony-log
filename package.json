@@ -1,7 +1,7 @@
 {
   "name": "ng-harmony-log",
   "description": "Logging, Errors, Exceptions",
-  "version": "0.1.5",
+  "version": "0.1.8",
   "homepage": "https://github.com/ng-harmony/ng-harmony-log",
   "author": {
     "name": "joehannes",
@@ -34,7 +34,9 @@
     "transpile_umd": "babel --modules umd -e 1 -s -o ./build/modules/umd_module.js ./build/index.js",
     "modules": "npm run transpile_amd && npm run transpile_common && npm run transpile_system && npm run transpile_umd"
   },
-  "dependencies": {},
+  "dependencies": {
+    "js-logger": "^1.3.0"
+  },
   "devDependencies": {
     "babel-cli": "^6.5.1",
     "babel-plugin-transform-class-properties": "^6.11.5",

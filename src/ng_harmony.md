@@ -45,6 +45,8 @@ provide properties like so
 
 ```javascript
 import "js-logger";
+
+var Accessor = this;
 ```
 The Logger-Mixin
 
@@ -55,7 +57,7 @@ export class Log {
             this._name = this.constructor.name + "::" + (Math.random() / (new Date()).getTime()).toString(36).slice(-7);
         }
         let level = o.level || "info",
-            logger = Logger.get(this._name),
+            logger = Accessor.Logger.get(this._name),
             severe = (o.level === "warn" || o.level === "error");
         logger["info"](o.name);
         o instanceof Error && logger["info"](`F: ${o.fileName}, L: ${o.lineNumber}, C: ${o.columnNumber}`);
@@ -65,7 +67,8 @@ export class Log {
 }
 ```
 Error Classes
-
+// check what to add n import for extending Error
+// note and import to decorator
 ```javascript
 export class GenericError extends Error {
     name = this.constructor.name;
@@ -109,13 +112,15 @@ export class DataRequestVoidError extends DataRequestError {
 export class NotImplementedError extends GenericError {
     message = "The method is to mandatory by design, but isn't implemented";
     constructor (methodSignature) {
+        super();
         this.message = methodSignature + ": " + this.message;
     }
 }
 ```
 
 ## CHANGELOG
-*v0.1.5* Migrating the `Logging-Decorator` to `ng-harmony-decorate`
+*v0.1.6* Debugging ...
+*v0.1.5* Migrating the `Logging-Decorator` to `ng-harmony-decorator`
 *v0.1.4* Due to setting the method dynamically `(Object.defineProperty)` elsewhere, it is possible to add the methodSignature
 *v0.1.3* NotImplementedError
 *v0.1.2* Basic Error classes
