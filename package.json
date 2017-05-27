@@ -1,7 +1,7 @@
 {
   "name": "ng-harmony-log",
   "description": "Logging, Errors, Exceptions",
-  "version": "0.1.10",
+  "version": "0.2.0",
   "homepage": "https://github.com/ng-harmony/ng-harmony-log",
   "author": {
     "name": "joehannes",
@@ -35,7 +35,7 @@
     "modules": "npm run transpile_amd && npm run transpile_common && npm run transpile_system && npm run transpile_umd"
   },
   "dependencies": {
-    "js-logging": "^0.1.0"
+    "we-js-logger": "^1.0.3"
   },
   "devDependencies": {
     "babel-cli": "^6.5.1",

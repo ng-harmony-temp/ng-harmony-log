@@ -44,36 +44,51 @@ provide properties like so
 "message": "My Msg describing a situation deserving attention"
 
 ```javascript
-import * as Logger from "js-logging";
+import { ClientConsoleLogger as ClientLogger, ClientRollbarLogger as RemoteLogger } from "we-js-logger";
 
-let conf = {
-    filters: {
-        debug: 'white',
-        info: 'yellow',
-        notice: 'green',
-        warning: 'blue',
-        error: 'red',
-        critical: 'red',
-        alert: 'cyan',
-        emergency: 'magenta'
-    }
-};
-var Console = new Logger(conf);
+const Console = new Logger({
+    name: 'my-logger',
+    environment: 'development',
+    level: 'debug',
+    codeVersion: process.env.SHA_VERSION,
+    logentriesToken: process.env.LOGENTRIES_TOKEN,
+    rollbarToken: process.env.ROLLBAR_TOKEN,
+    scrubFields: ['password'], // blacklist field keys being sent through logger 
+});
 ```
 The Logger-Mixin
 
 ```javascript
 export class Log {
-    log (o) {
-        if (typeof this._name === "undefined" || this._name === null) {
-            this._name = this.constructor.name + "::" + (Math.random() / (new Date()).getTime()).toString(36).slice(-7);
+    log ({ level, msg }, e = {}) {
+        if (this.constructor.Loggers.environment !== "production" || level > 39) {
+            this.constructor.Loggers.local.write({
+                name: this.constructor.name, 
+                time: new Date().getTime(),
+                level: level,
+                msg: msg,
+                err: {
+                    file: e.fileName || null,
+                    line: e.lineNumber || null,
+                    column: e.columnNumber || null,
+                    stack: e.stack || null
+                }    
+            });
         }
-        let level = o.level || "info",
-            severe = (o.level === "warn" || o.level === "error");
-        Console["info"](o.name);
-        o instanceof Error && Console["info"](`F: ${o.fileName}, L: ${o.lineNumber}, C: ${o.columnNumber}`);
-        Console[level](o.message);
-        o instanceof Error && severe && Console[level](o.stack);
+        if (this.constructor.Loggers.remote !== null) {
+            this.constructor.Loggers.remote({ level, msg, err: e});
+        }
+    }
+    static create ({ rollbarToken, environment, npmPackageVersion}) {
+        this.Loggers = this.Loggers || {
+            local: new ClientLogger(), 
+            remote: rollbarToken ? new RemoteLogger({
+                token: rollbarToken,
+                environment: environment,
+                codeVersion: npmPackageVersion
+            }) : null,
+            environment
+        }
     }
 }
 ```
