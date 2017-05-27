@@ -44,41 +44,24 @@ provide properties like so
 "message": "My Msg describing a situation deserving attention"
 
 ```javascript
-import { ClientConsoleLogger as ClientLogger, ClientRollbarLogger as RemoteLogger } from "we-js-logger";
+import * as Logger from "we-js-logger";
 ```
 The Logger-Mixin
 
 ```javascript
 export class Log {
     log ({ level, msg }, e = {}) {
-        if (this.constructor.Loggers.environment !== "production" || level > 39) {
-            this.constructor.Loggers.local.write({
-                name: this.constructor.name, 
-                time: new Date().getTime(),
-                level: level,
-                msg: msg,
-                err: {
-                    file: e.fileName || null,
-                    line: e.lineNumber || null,
-                    column: e.columnNumber || null,
-                    stack: e.stack || null
-                }    
-            });
-        }
-        if (this.constructor.Loggers.remote !== null) {
-            this.constructor.Loggers.remote({ level, msg, err: e});
-        }
+        this.constructor.Logger[level](e, msg);
     }
-    static create ({ rollbarToken, environment, npmPackageVersion}) {
-        this.Loggers = this.Loggers || {
-            local: new ClientLogger(), 
-            remote: rollbarToken ? new RemoteLogger({
-                token: rollbarToken,
-                environment: environment,
-                codeVersion: npmPackageVersion
-            }) : null,
-            environment
-        }
+    static create ({ loggerName, rollbarToken, environment, npmPackageVersion}) {
+        this.Logger = this.Logger || new Logger({
+            name: loggerName,
+            environment: environment,
+            level: 'debug',
+            codeVersion: npmPackageVersion,
+            rollbarToken: rollbarToken,
+            scrubFields: ['password']
+        });
     }
 }
 ```
