@@ -2,7 +2,7 @@ import * as Logger from "we-js-logger";
 
 export class Log {
     static create ({ loggerName, rollbarToken, environment, npmPackageVersion}) {
-        this.Logger = this.Logger || new Logger.default({
+        return new Logger.default({
             name: loggerName,
             environment: environment,
             level: 'debug',
