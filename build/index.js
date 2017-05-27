@@ -5,7 +5,7 @@ export class Log {
         this.constructor.Logger[level](e, msg);
     }
     static create ({ loggerName, rollbarToken, environment, npmPackageVersion}) {
-        this.Logger = this.Logger || new Logger({
+        this.Logger = this.Logger || new Logger.default({
             name: loggerName,
             environment: environment,
             level: 'debug',
