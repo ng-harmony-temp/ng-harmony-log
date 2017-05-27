@@ -1,9 +1,6 @@
 import * as Logger from "we-js-logger";
 
 export class Log {
-    log ({ level, msg }, e = {}) {
-        this.constructor.Logger[level](e, msg);
-    }
     static create ({ loggerName, rollbarToken, environment, npmPackageVersion}) {
         this.Logger = this.Logger || new Logger.default({
             name: loggerName,
