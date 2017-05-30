@@ -1,7 +1,7 @@
 {
   "name": "ng-harmony-log",
   "description": "Logging, Errors, Exceptions",
-  "version": "0.2.6",
+  "version": "0.3.0",
   "homepage": "https://github.com/ng-harmony/ng-harmony-log",
   "author": {
     "name": "joehannes",
